@@ -1,0 +1,26 @@
+{
+  "name": "gaokao-shortcuts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "高考选填题抢分技巧速查 · 通用方法 / 特殊技巧 / 二级结论，按验证状态筛选可信度",
+  "type": "module",
+  "scripts": {
+    "index": "node tools/build-index.mjs",
+    "check": "node tools/build-index.mjs --check",
+    "test": "node tools/check-render.mjs",
+    "verify": "npm run check && npm run index && npm run test",
+    "serve": "node tools/serve.mjs",
+    "deploy": "npm run index && npx wrangler pages deploy site --project-name=27thu --branch=main"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "gaokao",
+    "highschool",
+    "study-notes",
+    "learning-resources",
+    "exam-tips"
+  ],
+  "license": "CC-BY-NC-SA-4.0"
+}

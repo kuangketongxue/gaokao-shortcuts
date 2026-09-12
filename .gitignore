@@ -1,0 +1,16 @@
+# 构建产物：由 tools/build-index.mjs 生成，不进版本库
+site/tech/
+site/data/
+
+# 依赖与工具
+node_modules/
+.wrangler/
+.npm/
+
+# 本地预览缓存
+*.log
+
+# 系统垃圾
+.DS_Store
+Thumbs.db
+desktop.ini

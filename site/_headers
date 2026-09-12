@@ -1,0 +1,18 @@
+/*
+  Cloudflare Pages 响应头。
+  构建产物（/data/、/tech/）用短缓存，保证新技巧及时可见；
+  静态依赖（/vendor/）内容寻址不变，长缓存。
+
+/vendor/*
+  Cache-Control: public, max-age=604800, immutable
+
+/data/*
+  Cache-Control: public, max-age=60
+
+/tech/*
+  Cache-Control: public, max-age=60
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
