@@ -79,11 +79,15 @@ tech/                        ← all techniques (.md), the single source of trut
 site/                        ← static site deployed to Cloudflare Pages
 tools/build-index.mjs        ← the only build step: tech/ → index + site data
 tools/serve.mjs              ← zero-dependency local preview server
+tools/privacy-scan.mjs       ← privacy scan: secrets / personal data / large files
 .github/workflows/deploy.yml ← deploys on every push to main
+.github/workflows/privacy-scan.yml ← privacy scan on every push and PR
 CLAUDE.md                    ← project rules (Chinese)
 ```
 
 The index and the site data are **derived** from `tech/*.md`, so docs can never drift from reality — CI fails the build when the committed index is stale.
+
+This is a public repo, so "don't leak anything" is enforced by a mechanism, not by good intentions. Every push and every PR runs `tools/privacy-scan.mjs`: tokens, private keys, phone numbers, national ID numbers, non-noreply email addresses and sensitive filenames all block the merge. Run `npm run privacy` to check locally before pushing. Full rules live in the 「隐私扫描」section of [`CLAUDE.md`](CLAUDE.md).
 
 ## Contributing
 
@@ -94,7 +98,7 @@ The index and the site data are **derived** from `tech/*.md`, so docs can never 
 3. Copy `tech/_template.md`, fill it in, run `npm run index`
 4. Commit and open a Pull Request
 
-**Please don't**: hand-edit `tech/README.md` (it gets overwritten), claim `真题验证` without verifying, or commit any personal data.
+**Please don't**: hand-edit `tech/README.md` (it gets overwritten), claim `真题验证` without verifying, or commit any personal data — CI's `privacy-scan` will block it anyway.
 
 ## License
 

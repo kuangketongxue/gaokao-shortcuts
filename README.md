@@ -122,11 +122,15 @@ tech/                        ← 全部技巧（一条一个 .md），唯一的�
 site/                        ← 静态站点，部署到 Cloudflare Pages
 tools/build-index.mjs        ← 唯一构建步骤：扫 tech/ → 索引 + 站点数据
 tools/serve.mjs              ← 零依赖本地预览服务器
+tools/privacy-scan.mjs       ← 隐私扫描：密钥 / 个人信息 / 大文件
 .github/workflows/deploy.yml ← push main 即自动部署
+.github/workflows/privacy-scan.yml ← push main 与 PR 自动做隐私扫描
 CLAUDE.md                    ← 项目规则（改规矩先改这里）
 ```
 
 `tech/README.md` 和站点数据都是从 `tech/*.md` **推导**出来的，不存在「文档和实际对不上」的情况。CI 会在索引漂移时直接红灯。
+
+仓库是公开的，所以「不泄漏隐私」也做成了机制而不是口号：每次 push 和每个 PR 都会跑 `tools/privacy-scan.mjs`，密钥、私钥、手机号、身份证号、非 noreply 邮箱、敏感文件名一律阻断合并（本地可用 `npm run privacy` 先自查）。详细规则见 [`CLAUDE.md`](CLAUDE.md) 的「隐私扫描」一节。
 
 <p align="right">(<a href="#structure">回到顶部</a>)</p>
 
@@ -157,7 +161,7 @@ CLAUDE.md                    ← 项目规则（改规矩先改这里）
 4. 提交 (`git commit -m 'add: 你的技巧名'`)
 5. 发起 Pull Request
 
-**别做的事**：不要手改 `tech/README.md`（会覆盖）；不要标着 `真题验证` 却没真验过；不要提交任何个人成绩、准考证号等隐私数据。
+**别做的事**：不要手改 `tech/README.md`（会覆盖）；不要标着 `真题验证` 却没真验过；不要提交任何个人成绩、准考证号等隐私数据——这条有 CI 兜着，`privacy-scan` 会直接拦下来。
 
 ### 贡献者
 

@@ -8,7 +8,8 @@
     "index": "node tools/build-index.mjs",
     "check": "node tools/build-index.mjs --check",
     "test": "node tools/check-render.mjs",
-    "verify": "npm run check && npm run index && npm run test",
+    "privacy": "node tools/privacy-scan.mjs",
+    "verify": "npm run check && npm run index && npm run test && npm run privacy",
     "serve": "node tools/serve.mjs",
     "deploy": "npm run index && npx wrangler pages deploy site --project-name=27thu --branch=main"
   },

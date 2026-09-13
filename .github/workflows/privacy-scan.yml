@@ -1,0 +1,29 @@
+name: 隐私扫描（CI 强制）
+
+# 公开仓库的隐私红线：任何会引入密钥 / 手机号 / 身份证 / 个人邮箱 / 大文件的
+# push 或 PR 都在此被拦下。本工作流只扫描，不部署（不触碰 wrangler / Cloudflare）。
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  privacy-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出（含完整历史，供 --history 抓「提交后又删除」的命中）
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 安装 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 隐私扫描
+        run: node tools/privacy-scan.mjs --history
